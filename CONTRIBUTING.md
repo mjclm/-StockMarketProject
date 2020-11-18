@@ -1,0 +1,4 @@
+# Contributing file
+
+- blabla
+- blabla
