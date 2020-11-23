@@ -25,17 +25,23 @@ import yaml
 
 
 def create_twitter_url():
-    handle = "#MSFT OR #AMZN OR #FB"
+    # url-encoding
+    # TODO: Add a context to the tweets
+    # health situation, promotion period, pollution, fraud, new product
+    # new discovery, strike, 
+    handle = requests.utils.quote(
+        "(lang:en OR lang:fr OR lang:de OR lang:es) " # Language of tweets
+        "(#Facebook OR #Amazon OR #Microsoft OR #Google OR #Apple) " # List of brand citation
+        "is:verified" # Only account verified
+    )
     max_results = 10
-    fields = ['id', 'text', 'created_at',
-              'public_metrics', 'context_annotations', "geo"
-              ]
+    fields = ['id', 'text', 'created_at']
     mrf = "max_results={}".format(max_results)
     tf = "tweet.fields={}".format(",".join(fields))
-    start_time = "start_time={}".format("2020-11-15T01:00:00-05:00")
-    end_time = "end_time={}".format("2020-11-16T01:00:00-05:00")
+    # start_time = "start_time={}".format("2020-11-15T01:00:00-05:00")
+    # end_time = "end_time={}".format("2020-11-16T01:00:00-05:00")
     q = "query={}".format(handle)
-    url = "https://api.twitter.com/2/tweets/search/recent?{}&{}&{}&{}&{}".format(
+    url = "https://api.twitter.com/2/tweets/search/recent?{}&{}&{}".format(
         # start_time, end_time,
         mrf, tf, q
     )
