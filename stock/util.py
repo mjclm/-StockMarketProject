@@ -51,3 +51,12 @@ def merge_by_concat(df1, df2, merge_on):
     new_cols = [col for col in list(merged_gf) if col not in merge_on]
     df1 = pd.concat([df1, merged_gf[new_cols]], axis=1)
     return df1
+
+
+# Merge all the data on keys
+def merge_them_all_together(main_df: pd.DataFrame, dfs: list, keys: list) -> pd.DataFrame:
+    main_df_copy = main_df.copy()
+    for df in dfs:
+        main_df_copy = merge_by_concat(main_df_copy, df, keys)
+
+    return main_df_copy
