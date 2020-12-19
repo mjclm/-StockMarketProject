@@ -13,6 +13,7 @@
 # https://www.kaggle.com/vbmokin/data-science-for-tabular-data-advanced-techniques
 # https://www.kaggle.com/youhanlee/simple-quant-features-using-python
 
+import yaml
 
 from stock.prepare_data import create_finance_dataframe
 from stock.prepare_data import features_creation_lags
@@ -25,9 +26,14 @@ from stock.util import merge_them_all_together
 
 from stock.model import my_model
 
+def process_yaml():
+    with open("path_data.yaml") as file:
+        return yaml.safe_load(file)
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    REDDIT_NEWS_LINK = "https://www.reddit.com/r/worldnews/"
+    path_yaml = process_yaml()
+    REDDIT_NEWS_LINK = path_yaml['news_subreddit']
     TICKERS = ["GOOG", "AMZN", "FB", "AAPL", "MSFT"]
     START = "2018-01-01"
     END = "2020-10-20"
@@ -37,6 +43,9 @@ if __name__ == '__main__':
         (("tickers", TICKERS), ("start", START), ("end", END),
          ("interval", INTERVAL), ("price", PRICE))
     )
+
+
+
 
     # Preview of data
     gafam_close_df = create_finance_dataframe(**DATASET_FINANCE_PARAMS)
